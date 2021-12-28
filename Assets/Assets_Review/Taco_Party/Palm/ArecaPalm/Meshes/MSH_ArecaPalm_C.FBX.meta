@@ -3,7 +3,17 @@ guid: 744efedbba93f084d9a107d4b28e1ece
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ArecaPalm_Bark
+    second: {fileID: 2100000, guid: 66d2ea4a55241614f8d17723e21d56d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ArecaPalm_Leaves
+    second: {fileID: 2100000, guid: a76d7e9cae0655445b97cda10415f315, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
