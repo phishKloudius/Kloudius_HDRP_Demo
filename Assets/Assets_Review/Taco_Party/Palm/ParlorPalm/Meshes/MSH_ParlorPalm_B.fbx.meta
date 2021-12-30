@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_ParlorPalm
+    second: {fileID: 2100000, guid: 52bc20100353d894c86c9a950d1775d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_ParlorPalm_B
     second: {fileID: 2100000, guid: 52bc20100353d894c86c9a950d1775d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ParlorPalm_Stem
+    second: {fileID: 2100000, guid: de361f5f3cf26b741b6c4e2f5ec40115, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

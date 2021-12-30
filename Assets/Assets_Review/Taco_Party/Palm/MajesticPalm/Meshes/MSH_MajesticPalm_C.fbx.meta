@@ -7,8 +7,23 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_MajesticPalm
+    second: {fileID: 2100000, guid: c0ea8ab22d9cf714387f04a1810ae8d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_MajesticPalm_C
     second: {fileID: 2100000, guid: c0ea8ab22d9cf714387f04a1810ae8d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_MajesticPalm_Stem
+    second: {fileID: 2100000, guid: 0004daf28e19f0f4881923a1d03ea723, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_MajesticPalm_Trunk
+    second: {fileID: 2100000, guid: 565e0059efcdc024f9d98fe0add766f5, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
