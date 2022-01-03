@@ -17,6 +17,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_ParlorPalm_Stem
+    second: {fileID: 2100000, guid: de361f5f3cf26b741b6c4e2f5ec40115, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_StemUpdate
     second: {fileID: 2100000, guid: de361f5f3cf26b741b6c4e2f5ec40115, type: 2}
   - first:
