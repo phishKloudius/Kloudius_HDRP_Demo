@@ -3654,7 +3654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &271942469
 Transform:
   m_ObjectHideFlags: 0
@@ -3669,6 +3669,7 @@ Transform:
   - {fileID: 1211866268}
   - {fileID: 1772554831}
   - {fileID: 1123259213}
+  - {fileID: 1770736623}
   m_Father: {fileID: 420004884}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18578,7 +18579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1676539798
 Transform:
   m_ObjectHideFlags: 0
@@ -19469,6 +19470,68 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1770736622
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 271942469}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+      propertyPath: m_Name
+      value: MSH_ChineseFanPalm_D
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+--- !u!4 &1770736623 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 95e77ac28f24c744d9c049ccec01b465, type: 3}
+  m_PrefabInstance: {fileID: 1770736622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1772554830
 PrefabInstance:
   m_ObjectHideFlags: 0
