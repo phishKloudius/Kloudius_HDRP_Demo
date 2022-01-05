@@ -3,7 +3,17 @@ guid: 36da08e04ec6496418980a9461340676
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Cascade Palm_Leaves
+    second: {fileID: 2100000, guid: 8056880dfa1fbc24b9a6ead700b0b51e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Cascade Palm_Stem
+    second: {fileID: 2100000, guid: 53023223d013622419f8d620c2079354, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
