@@ -12,11 +12,6 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_ArecaPalm_D_Branch
-    second: {fileID: 2100000, guid: 8ac129a631f547b468e9f04c61a0f5b0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
       name: M_ArecaPalm_D_Leaves
     second: {fileID: 2100000, guid: e3637d9ab64303d4fb3f5c7dd2bb5a8b, type: 2}
   materials:
