@@ -7,7 +7,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: MSH_ArecaPalm_D_Mat
+    second: {fileID: 2100000, guid: e3637d9ab64303d4fb3f5c7dd2bb5a8b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_ArecaPalm_D_Bark
+    second: {fileID: 2100000, guid: 275b4063d30359945b99ec3d00d5b858, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_ArecaPalm_D_Bark_Mat
     second: {fileID: 2100000, guid: 275b4063d30359945b99ec3d00d5b858, type: 2}
   - first:
       type: UnityEngine:Material
