@@ -1,27 +1,9 @@
 fileFormatVersion: 2
-guid: 9211411e3ee179f4c9f11f6620a34a91
+guid: e6e878e403760904a8df5cf6bd336a4a
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable:
-  - first:
-      74: 1827226128182048838
-    second: Take 001
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_ChineseFanPalm
-    second: {fileID: 2100000, guid: 541a9952b6a0bc34680e08c6cfcc3690, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_ChineseFanPalm_Bark
-    second: {fileID: 2100000, guid: 585266a317480b748986cb7723fa198d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_ChineseFanPalm_Stem
-    second: {fileID: 2100000, guid: 9670ee980eaef4640afd986eca2f1e34, type: 2}
+  internalIDToNameTable: []
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -51,10 +33,7 @@ ModelImporter:
     clipAnimations: []
     isReadable: 0
   meshes:
-    lODScreenPercentages:
-    - 0.25
-    - 0.125
-    - 0.01
+    lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
