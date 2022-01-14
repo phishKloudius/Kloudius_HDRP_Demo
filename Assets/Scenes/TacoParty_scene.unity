@@ -33417,7 +33417,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 29d102ed2d9cd234d8f8e61340bbb0e5, type: 2}
+  - {fileID: 2100000, guid: 010140a5e428012459f8058527de83a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -46355,7 +46355,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ec0be29b1bcb50b43a3ef4236ddb6f2a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a66d9ac3e863f0c47984ed248c9c1d2d, type: 2}
+      objectReference: {fileID: 2100000, guid: 572d0654f59955741b682a3bfe83b9e2, type: 2}
     - target: {fileID: 919132149155446097, guid: ec0be29b1bcb50b43a3ef4236ddb6f2a, type: 3}
       propertyPath: m_Name
       value: MSH_StageFloor
