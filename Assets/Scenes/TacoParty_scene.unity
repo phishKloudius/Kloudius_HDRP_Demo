@@ -19591,6 +19591,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MSH_human_scale
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9a0d9365fc2c8e84bbfeaf8842b4fcce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a0d9365fc2c8e84bbfeaf8842b4fcce, type: 3}
 --- !u!1 &916593493
