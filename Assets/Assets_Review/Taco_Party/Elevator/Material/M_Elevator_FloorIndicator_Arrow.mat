@@ -45,18 +45,19 @@ Material:
     - _AlphaSrcBlend: 1
     - _Arrow_Movement: 1
     - _Arrow_Reverse: 0
-    - _Arrow_Speed: 1.18
+    - _Arrow_Speed: 1
     - _BlendMode: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _E_Mul: 20000
+    - _E_Mul: 50000
     - _EnableFogOnTransparent: 1
     - _Flipbook_Columns: 5
     - _Flipbook_Rows: 5
     - _Flipbook_StartFrame: 0
+    - _Floor: 0
     - _Metallic: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
