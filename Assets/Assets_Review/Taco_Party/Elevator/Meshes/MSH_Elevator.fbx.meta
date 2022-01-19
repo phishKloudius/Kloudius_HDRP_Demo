@@ -3,7 +3,27 @@ guid: cc0387f3ca830b644a8635185741ed50
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Elevator_Door_Glass
+    second: {fileID: 2100000, guid: 43b8d99a6d6398e468e420ada2c05b98, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Elevator_FloorIndicator_Arrow
+    second: {fileID: 2100000, guid: a3673fde48eb10b4c89ccc807bed0ed1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Elevator_FloorIndicator_Floor
+    second: {fileID: 2100000, guid: 9ba3936ffc5b0f24aaf98f3a28fa3bf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Elevator_FloorIndicator_Glass
+    second: {fileID: 2100000, guid: 1191f4cd57e8fe74292c195c4bce0081, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Elevator_FloorIndicator_Arrow
   m_Shader: {fileID: 4800000, guid: cae6bb8e68b250540adea1e1538b13ed, type: 3}
-  m_ShaderKeywords: _ADD_PRECOMPUTED_VELOCITY _ARROW_MOVEMENT_ON _DISABLE_SSR_TRANSPARENT
-    _NORMALMAP_TANGENT_SPACE _TOGGLESWITCH0_ON
+  m_ShaderKeywords: _ADD_PRECOMPUTED_VELOCITY _ARROW_MOVEMENT_ON _ARROW_REVERSE_ON
+    _DISABLE_SSR_TRANSPARENT _NORMALMAP_TANGENT_SPACE _TOGGLESWITCH0_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -44,15 +44,16 @@ Material:
     - _AlphaDstBlend: 0
     - _AlphaSrcBlend: 1
     - _Arrow_Movement: 1
-    - _Arrow_Reverse: 0
-    - _Arrow_Speed: 1
+    - _Arrow_Reverse: 1
+    - _Arrow_Speed: -0.62
     - _BlendMode: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _E_Mul: 50000
+    - _E_Mul: 100000
+    - _Emission_Mul: 100000
     - _EnableFogOnTransparent: 1
     - _Flipbook_Columns: 5
     - _Flipbook_Rows: 5

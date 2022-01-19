@@ -64,12 +64,13 @@ Material:
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _E_Mul: 50000
+    - _E_Mul: 100000
+    - _Emission_Mul: 100000
     - _EnableFogOnTransparent: 1
     - _Flipbook_Columns: 5
     - _Flipbook_Rows: 5
     - _Flipbook_StartFrame: 13.4
-    - _Floor: 1
+    - _Floor: 11
     - _Metallic: 0
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0

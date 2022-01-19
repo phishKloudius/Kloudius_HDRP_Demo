@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Elevator_Door_Glass
+  m_Shader: {fileID: 4800000, guid: c4aad93edc7fce04ebe991b09fa39ccb, type: 3}
+  m_ShaderKeywords: _ADD_PRECOMPUTED_VELOCITY _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    MotionVector: User
+    RenderType: Transparent
+  disabledShaderPasses:
+  - TransparentBackface
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _E_map:
+        m_Texture: {fileID: 2800000, guid: f7d156afd0f7e5246835c8ec168b906d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: 1a6333323d9b387499a6d434eac67eaf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: f7d156afd0f7e5246835c8ec168b906d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AddPrecomputedVelocity: 1
+    - _AlphaCutoff: 0.5
+    - _AlphaCutoffEnable: 0
+    - _AlphaDstBlend: 10
+    - _AlphaSrcBlend: 1
+    - _BlendMode: 0
+    - _CullMode: 2
+    - _CullModeForward: 2
+    - _DoubleSidedEnable: 0
+    - _DoubleSidedNormalMode: 2
+    - _DstBlend: 10
+    - _E_Multiply: 100000
+    - _E_Speed: 0.762
+    - _E_UVX: 0
+    - _E_UVY_Mul: 25
+    - _E_UVY_Offset: 0
+    - _Emission_Color_Mul: 100000
+    - _Emission_UVX_Mul: 0
+    - _Emission_UVY_Mul: 25
+    - _Emission_UVY_Offset: 0
+    - _EnableFogOnTransparent: 1
+    - _Metallic: 0.738
+    - _PowVal: 1
+    - _ReceivesSSR: 1
+    - _ReceivesSSRTransparent: 1
+    - _RenderQueueType: 4
+    - _RequireSplitLighting: 0
+    - _Smoothness: 0.8
+    - _SrcBlend: 1
+    - _StencilRef: 0
+    - _StencilRefDepth: 8
+    - _StencilRefDistortionVec: 4
+    - _StencilRefGBuffer: 10
+    - _StencilRefMV: 40
+    - _StencilWriteMask: 6
+    - _StencilWriteMaskDepth: 8
+    - _StencilWriteMaskDistortionVec: 4
+    - _StencilWriteMaskGBuffer: 14
+    - _StencilWriteMaskMV: 40
+    - _SupportDecals: 1
+    - _SurfaceType: 1
+    - _Transition_Point: 13.7
+    - _Transition_Range: 12
+    - _TransparentBackfaceEnable: 0
+    - _TransparentCullMode: 2
+    - _TransparentSortPriority: 0
+    - _TransparentZWrite: 1
+    - _UseShadowThreshold: 0
+    - _ZTestDepthEqualForOpaque: 4
+    - _ZTestGBuffer: 4
+    - _ZTestTransparent: 4
+    - _ZWrite: 1
+    - _offset_E: 1
+    - _test: -0.38
+    m_Colors:
+    - _Albedo_Col: {r: 1, g: 1, b: 1, a: 0.9019608}
+    - _Albedo_Mul: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 1, g: 1, b: 1, a: 0.87058824}
+    - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
+    - _E_Color: {r: 0.77613616, g: 0.8809918, b: 0.9716981, a: 0}
+    - _E_UV: {r: 0, g: 0, b: 0, a: 0}
+    - _E_color: {r: 0.746102, g: 0.9217774, b: 0.99215686, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission_Color: {r: 0.77150977, g: 0.88108975, b: 0.9607843, a: 0}
+    - _RemapRange: {r: 0, g: 10, b: 0, a: 0}
+  m_BuildTextureStacks: []
