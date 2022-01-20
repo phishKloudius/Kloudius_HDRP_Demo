@@ -24,6 +24,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: M_Elevator_FloorIndicator_Glass
     second: {fileID: 2100000, guid: 1191f4cd57e8fe74292c195c4bce0081, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Elevator_Main
+    second: {fileID: 2100000, guid: 2dbaa6a552151b4409aba9acfb80ae4c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

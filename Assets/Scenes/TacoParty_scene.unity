@@ -26667,13 +26667,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3366661332759692223, guid: cc0387f3ca830b644a8635185741ed50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 123984942285209022, guid: cc0387f3ca830b644a8635185741ed50, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc0387f3ca830b644a8635185741ed50, type: 3}
       propertyPath: m_Name
       value: MSH_Elevator
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cc0387f3ca830b644a8635185741ed50, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0387f3ca830b644a8635185741ed50, type: 3}
