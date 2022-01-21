@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Window
+    second: {fileID: 2100000, guid: af99782ddb5e5d54eb480cb0ae42bb55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: lambert4
     second: {fileID: 2100000, guid: af99782ddb5e5d54eb480cb0ae42bb55, type: 2}
   materials:
