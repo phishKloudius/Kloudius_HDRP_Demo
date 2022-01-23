@@ -52,7 +52,7 @@ Material:
     - _DstBlend: 10
     - _Emission_Color_Mul: 2500
     - _Emission_UVX_Mul: 0
-    - _Emission_UVY_Mul: 7.3
+    - _Emission_UVY_Mul: 25
     - _EnableFogOnTransparent: 1
     - _Fake_Shift: 1
     - _Mask_Distance: 0.2
