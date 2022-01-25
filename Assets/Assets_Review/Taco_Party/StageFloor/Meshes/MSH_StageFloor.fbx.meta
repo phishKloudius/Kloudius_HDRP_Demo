@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: M_Stage
     second: {fileID: 2100000, guid: a66d9ac3e863f0c47984ed248c9c1d2d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_StageFloor
+    second: {fileID: 2100000, guid: a66d9ac3e863f0c47984ed248c9c1d2d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
