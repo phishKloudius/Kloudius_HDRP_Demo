@@ -11,7 +11,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: M_Elevator_Door_Glass
-    second: {fileID: 2100000, guid: 43b8d99a6d6398e468e420ada2c05b98, type: 2}
+    second: {fileID: 2100000, guid: a426279f6b10b4b4396546d056689dd0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
