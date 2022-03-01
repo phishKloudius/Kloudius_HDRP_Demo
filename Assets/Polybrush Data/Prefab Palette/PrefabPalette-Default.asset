@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc38003c0e0db6641a4762d4f392de52, type: 3}
+  m_Name: PrefabPalette-Default
+  m_EditorClassIdentifier: 
+  prefabs:
+  - gameObject: {fileID: 6626089523904821561, guid: 7371c352f557ee24f82dfd919e6dde18, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S01
+  - gameObject: {fileID: 8942358549833456793, guid: 23235819598e92049bff5173baa42ed2, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S02
+  - gameObject: {fileID: 1262322380706450612, guid: 051c89acaa32e9941936f7c54cc885b8, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.5, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S03
+  - gameObject: {fileID: 9000689223758636703, guid: 4901c81aac45fc345af3be1697a7adf8, type: 3}
+    settings:
+      m_Strength: 15.142833
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.5, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S04
+  - gameObject: {fileID: 5770886548887898302, guid: 0fc954246898e4a4ebffb6025104aea0, type: 3}
+    settings:
+      m_Strength: 35.941154
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.5, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S05
+  - gameObject: {fileID: 4639243057713330473, guid: 70abf2bf80284f84686f9daa88ca95b5, type: 3}
+    settings:
+      m_Strength: 33.86135
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S06
+  - gameObject: {fileID: 6155994494146368618, guid: abc58cbb6f0cb87449424d01be15dc9a, type: 3}
+    settings:
+      m_Strength: 13.063031
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S07
+  - gameObject: {fileID: 5013647465976772996, guid: 02749b310935a7c419c901c0e05acaa6, type: 3}
+    settings:
+      m_Strength: 38.02098
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S08
+  - gameObject: {fileID: 775129665340836528, guid: 86db2f67733ffc74c8de9f0c05be31a6, type: 3}
+    settings:
+      m_Strength: 31.781487
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.5, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S09
+  - gameObject: {fileID: 8837300762099658, guid: bbcb1b0c0f420c448bcc0ad5ed30a50d, type: 3}
+    settings:
+      m_Strength: 48.420166
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.5, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S10
+  - gameObject: {fileID: 2032579631507826531, guid: 7895904cd7ff0bf45bd0847c772722c7, type: 3}
+    settings:
+      m_Strength: 50.500004
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S11
+  - gameObject: {fileID: 5415131666745592283, guid: 2654d4845c17a444ca5ab84d5fba9405, type: 3}
+    settings:
+      m_Strength: 19.302528
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 360}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.3, y: 0.4}
+      m_UniformBool: 1
+      m_XRotationBool: 0
+      m_YRotationBool: 1
+      m_ZRotationBool: 0
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_S12
+  - gameObject: {fileID: 5013641232414677188, guid: 64294d38de8b2564f925b40e1d19e651, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 5, y: 360, z: 5}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_M01
+  - gameObject: {fileID: 7879695944348562143, guid: 93c3c85259917094d944d7ccc73b4466, type: 3}
+    settings:
+      m_Strength: 100
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 5, y: 359.99997, z: 5}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_M03
+  - gameObject: {fileID: 2151472534891975240, guid: 14d43baccfd3f1b408dd17f010457b5b, type: 3}
+    settings:
+      m_Strength: 96.25631
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 5, y: 360, z: 5}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.6}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_M02
+  - gameObject: {fileID: 156378060416564825, guid: 83fb99bbf60f68649a07180064ad229b, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.5}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_L01
+  - gameObject: {fileID: 5923792412494319959, guid: 0ef16e7d12335ef489bdabb5852e1f2b, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.5}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_L02
+  - gameObject: {fileID: 890987556275367917, guid: 2d020ea95bc964c4abdffb44cfec1871, type: 3}
+    settings:
+      m_Strength: 50
+      m_RotationRangeMin: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 360, z: 0}
+      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
+      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
+      m_UniformScale: {x: 0.4, y: 0.5}
+      m_UniformBool: 1
+      m_XRotationBool: 1
+      m_YRotationBool: 1
+      m_ZRotationBool: 1
+      m_XScaleBool: 0
+      m_YScaleBool: 0
+      m_ZScaleBool: 0
+    name: PR_Crater_Rocks_L03
