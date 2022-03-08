@@ -43,8 +43,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: 673376caa3e9e8047b532072301a7903, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Mask_Map:
+        m_Texture: {fileID: 2800000, guid: e6fb5629f0a71884fa03e1e60ea86139, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Noise_Parallax_Map:
         m_Texture: {fileID: 2800000, guid: d4c985ecc4591524aa8fbe8f5fe84a5f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Map:
+        m_Texture: {fileID: 2800000, guid: 5c7ac641823dd6e439e2f7fd601f245c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Snow_Albedo:
@@ -53,6 +61,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _T_Heart_Cracked_N:
         m_Texture: {fileID: 2800000, guid: 7cacf7a0c88a17243a7edae8b6334049, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_Heart_Ice_Snow_Mask:
+        m_Texture: {fileID: 2800000, guid: e6fb5629f0a71884fa03e1e60ea86139, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_Heart_Ice_Snow_N:
+        m_Texture: {fileID: 2800000, guid: 5c7ac641823dd6e439e2f7fd601f245c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T_Heart_Iced_Albedo:
@@ -135,6 +151,7 @@ Material:
     - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _Smoothness: 0.795
+    - _Smoothness_Mul: 1
     - _SrcBlend: 1
     - _StencilRef: 0
     - _StencilRefDepth: 0

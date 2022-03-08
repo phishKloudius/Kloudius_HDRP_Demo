@@ -5,7 +5,9 @@ ShaderImporter:
   defaultTextures:
   - _Icicle_Vertex_Noise: {fileID: 2800000, guid: 673376caa3e9e8047b532072301a7903, type: 3}
   - _Albedo_Texture: {fileID: 2800000, guid: c066fbe50f994e144a3a620018df14b4, type: 3}
+  - _Normal_Map: {fileID: 2800000, guid: 5c7ac641823dd6e439e2f7fd601f245c, type: 3}
   - _Cracks_Normal: {fileID: 2800000, guid: 7cacf7a0c88a17243a7edae8b6334049, type: 3}
+  - _Mask_Map: {fileID: 2800000, guid: e6fb5629f0a71884fa03e1e60ea86139, type: 3}
   - _Cracks_Map: {fileID: 2800000, guid: 40e0775e616293a48adde84b8e8b8e33, type: 3}
   - _Noise_Parallax_Map: {fileID: 2800000, guid: d4c985ecc4591524aa8fbe8f5fe84a5f, type: 3}
   - _Transparent_Map: {fileID: 2800000, guid: 599e179b21fd2f4449b4f0ad1eca6c2c, type: 3}
