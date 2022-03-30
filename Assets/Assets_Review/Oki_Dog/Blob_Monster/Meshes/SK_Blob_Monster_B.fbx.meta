@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_Blob_Monster
+    second: {fileID: 2100000, guid: 0829b84b5680da646994626abf087971, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_Blob_Monster_B
     second: {fileID: 2100000, guid: 0829b84b5680da646994626abf087971, type: 2}
   materials:
