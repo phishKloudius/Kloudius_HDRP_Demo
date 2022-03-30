@@ -13320,6 +13320,10 @@ PlayableDirector:
     value: {fileID: 512503622}
   - key: {fileID: 4905470599500289680, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
     value: {fileID: 512503622}
+  - key: {fileID: 8386995213701329386, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
+    value: {fileID: 953610189}
+  - key: {fileID: -3835560053224785802, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
+    value: {fileID: 953610189}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &870679154
@@ -14171,7 +14175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14213,8 +14217,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Blob_Monster_B
       objectReference: {fileID: 0}
+    - target: {fileID: 5937700096435303328, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
+--- !u!1 &953610188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
+  m_PrefabInstance: {fileID: 953610187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &953610189
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953610188}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &965282026
 PrefabInstance:
   m_ObjectHideFlags: 0
