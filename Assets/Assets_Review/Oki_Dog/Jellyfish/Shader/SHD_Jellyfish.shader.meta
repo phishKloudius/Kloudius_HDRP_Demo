@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e063593f27354154b839ed45ef249bbb
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _WavyOceanMap: {fileID: 2800000, guid: d0083018e404c3b4c9e47c5ab52f9963, type: 3}
+  - _AlbedoMap: {fileID: 2800000, guid: 52a53e2b2c508d84fa8fbb84a16be147, type: 3}
+  - _NormalMap: {fileID: 2800000, guid: c34c82965c540f14ab7fe5b0d603147e, type: 3}
+  - _MaskMap: {fileID: 2800000, guid: ae787322bc4ad1e47837a95b13a8b307, type: 3}
+  - _OpacityMap: {fileID: 2800000, guid: b15601e617d1a1c479116f6b6e2dc466, type: 3}
+  - _RefractionNormalMap: {fileID: 2800000, guid: c34c82965c540f14ab7fe5b0d603147e, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

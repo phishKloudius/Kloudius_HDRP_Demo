@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 1481.9727, g: 1836.0449, b: 2430.713, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21999,7 +21999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.184
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22061,6 +22061,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.5122517
       objectReference: {fileID: 0}
+    - target: {fileID: -8661008017503897045, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e866dc86a2284864ea80e856297166ca, type: 2}
     - target: {fileID: 919132149155446097, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A
@@ -22089,6 +22093,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.7638195
       objectReference: {fileID: 0}
+    - target: {fileID: 1528034508098609840, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e866dc86a2284864ea80e856297166ca, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35e7cae90a2f4794a853cb85d6d90c2d, type: 3}
 --- !u!1 &1513428699
@@ -28475,7 +28483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1633356364022573221, guid: 474e51bcbcb7b934e8d31f857025d8b4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1789175895722152691, guid: 474e51bcbcb7b934e8d31f857025d8b4, type: 3}
       propertyPath: m_IsActive
