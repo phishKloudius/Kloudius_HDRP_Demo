@@ -89,13 +89,15 @@ Material:
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 10
-    - _EmissionMultiplier: 6278
+    - _EmissionMultiplier: 1
+    - _EmissionOverall: 2
+    - _EmissionPatternMultiplier: 1
     - _EnableFogOnTransparent: 1
-    - _Float2: 0.027
+    - _Float2: 5
     - _FrenelMul: 844
     - _FresnelInnerMultiplier: 0.138
     - _FresnelMul: 125
-    - _FresnelMultiplier: 125
+    - _FresnelMultiplier: 497
     - _FresnelPow: 4.18
     - _FresnelScale: 5.37
     - _Fresnel_Pow: 4.18
