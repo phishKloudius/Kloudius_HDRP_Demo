@@ -31,6 +31,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 2800000, guid: 8b076529dd7985b409041ea2850ee94b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MaskMap:
         m_Texture: {fileID: 2800000, guid: ae787322bc4ad1e47837a95b13a8b307, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -45,6 +49,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _RefractionNormalMap:
         m_Texture: {fileID: 2800000, guid: c34c82965c540f14ab7fe5b0d603147e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _T_Jellyfish_D_Emission:
+        m_Texture: {fileID: 2800000, guid: 8b076529dd7985b409041ea2850ee94b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _T_Jellyfish_D_N:
@@ -90,8 +98,8 @@ Material:
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 10
     - _EmissionMultiplier: 1
-    - _EmissionOverall: 2
-    - _EmissionPatternMultiplier: 1
+    - _EmissionOverall: 1.5
+    - _EmissionPatternMultiplier: 10
     - _EnableFogOnTransparent: 1
     - _Float2: 5
     - _FrenelMul: 844
@@ -149,7 +157,7 @@ Material:
     m_Colors:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FresnelColor: {r: 6.02353, g: 4.831373, b: 4.109804, a: 0}
+    - _FresnelColor: {r: 6.02353, g: 4.762017, b: 3.8068707, a: 0}
     - _Fresnel_Col: {r: 6.490565, g: 5.1652665, b: 4.349698, a: 0}
     - _Noise_Direction: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _Noise_Tiling: {r: 0.5, g: 0.5, b: 0, a: 0}
