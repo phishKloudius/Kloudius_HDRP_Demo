@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SG_Lambert
-  m_Shader: {fileID: -6465566751694194690, guid: 5d29487457c8d874885b0139125db567, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: b537c82b763752b4aa87c7b549b4b200, type: 3}
   m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
