@@ -8715,7 +8715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.67
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8882,6 +8882,10 @@ PrefabInstance:
       value: SK_Blob_Monster
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1292595819831998381, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
