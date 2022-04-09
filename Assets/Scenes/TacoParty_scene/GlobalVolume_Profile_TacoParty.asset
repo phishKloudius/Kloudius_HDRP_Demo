@@ -49,6 +49,25 @@ MonoBehaviour:
   cascadeShadowBorder3:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-8043316284952893452
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7ff42a8c5be6646ad3975f3a54c1eb, type: 3}
+  m_Name: DiffusionProfileOverride
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  diffusionProfiles:
+    m_OverrideState: 1
+    m_Value:
+    - {fileID: 11400000, guid: 21f1cc4c02be0254fb16733d2d7c4e84, type: 2}
+    - {fileID: 11400000, guid: 03f8f9345ada7fd42b0806fe062af501, type: 2}
 --- !u!114 &-6544021110971830400
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -659,3 +678,39 @@ MonoBehaviour:
   - {fileID: -6544021110971830400}
   - {fileID: -2210244763763319511}
   - {fileID: -1346994236882228186}
+  - {fileID: -8043316284952893452}
+  - {fileID: 2094359246547583703}
+--- !u!114 &2094359246547583703
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d877a03bef431a847adca8ab343db3e1, type: 3}
+  m_Name: RayTracingSettings
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  rayBias:
+    m_OverrideState: 0
+    m_Value: 0.001
+    min: 0
+    max: 0.1
+  extendShadowCulling:
+    m_OverrideState: 0
+    m_Value: 0
+  extendCameraCulling:
+    m_OverrideState: 0
+    m_Value: 0
+  directionalShadowRayLength:
+    m_OverrideState: 0
+    m_Value: 1000
+    min: 0.01
+  directionalShadowFallbackIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+    max: 1
