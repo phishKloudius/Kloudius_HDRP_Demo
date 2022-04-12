@@ -14,7 +14,11 @@ Shader "SHD_Jellyfish_Emission"
 		_EmissionAllMultiplier("Emission All Multiplier", Range( 0 , 10000)) = 1
 		_ID_RedMultiplier("ID_Red Multiplier", Range( 0 , 10000)) = 1
 		_ID_GreenMultiplier("ID_Green Multiplier", Range( 0 , 10000)) = 1
-		[ASEEnd]_ID_BlueMultiplier("ID_Blue Multiplier", Range( 0 , 10000)) = 1
+		_ID_BlueMultiplier("ID_Blue Multiplier", Range( 0 , 10000)) = 1
+		_WavyOceanMap("Wavy Ocean Map", 2D) = "white" {}
+		_WavyOceanTile("Wavy Ocean Tile", Range( 0 , 0.1)) = 0.046
+		_WavyVertexOffset("Wavy Vertex Offset", Range( 0 , 0.1)) = 0.046
+		[ASEEnd]_WavyOceanSpeed("Wavy Ocean Speed", Range( 0 , 1)) = 0.228
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 		[HideInInspector] _RenderQueueType("Render Queue Type", Float) = 1
@@ -56,9 +60,9 @@ Shader "SHD_Jellyfish_Emission"
 		[HideInInspector] [Enum(Flip, 0, Mirror, 1, None, 2)] _DoubleSidedNormalMode("Double Sided Normal Mode", Float) = 2
 		[HideInInspector] _DoubleSidedConstants("DoubleSidedConstants", Vector) = (1,1,-1,0)
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
-		//_TessValue( "Tess Max Tessellation", Range( 1, 32 ) ) = 16
-		//_TessMin( "Tess Min Distance", Float ) = 10
-		//_TessMax( "Tess Max Distance", Float ) = 25
+		_TessValue( "Max Tessellation", Range( 1, 32 ) ) = 16
+		_TessMin( "Tess Min Distance", Float ) = 10
+		_TessMax( "Tess Max Distance", Float ) = 25
 		//_TessEdgeLength ( "Tess Edge length", Range( 2, 50 ) ) = 16
 		//_TessMaxDisp( "Tess Max Displacement", Float ) = 25
 	}
@@ -289,7 +293,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -338,6 +348,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -391,6 +404,7 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
+			sampler2D _WavyOceanMap;
 			sampler2D _AlbedoMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
@@ -406,7 +420,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -641,6 +656,11 @@ Shader "SHD_Jellyfish_Emission"
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( outputPackedVaryingsMeshToPS );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
+				
 				outputPackedVaryingsMeshToPS.ase_texcoord5.xy = inputMesh.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -651,7 +671,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -818,7 +838,7 @@ Shader "SHD_Jellyfish_Emission"
 				float4 tex2DNode14 = tex2D( _EmissionMap, uv_EmissionMap );
 				float2 uv_IDMap = packedInput.ase_texcoord5.xy * _IDMap_ST.xy + _IDMap_ST.zw;
 				float4 tex2DNode18 = tex2D( _IDMap, uv_IDMap );
-				float4 Emission_CHANNEL20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
+				float4 OUT_Emission20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
 				
 				surfaceDescription.Albedo = tex2D( _AlbedoMap, uv_AlbedoMap ).rgb;
 				surfaceDescription.Normal = UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f );
@@ -830,7 +850,7 @@ Shader "SHD_Jellyfish_Emission"
 				surfaceDescription.Specular = 0;
 				#endif
 
-				surfaceDescription.Emission = Emission_CHANNEL20.rgb;
+				surfaceDescription.Emission = OUT_Emission20.rgb;
 				surfaceDescription.Smoothness = tex2DNode12.a;
 				surfaceDescription.Occlusion = tex2DNode12.g;
 				surfaceDescription.Alpha = 1;
@@ -921,7 +941,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -959,6 +985,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -1012,6 +1041,7 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
+			sampler2D _WavyOceanMap;
 			sampler2D _AlbedoMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
@@ -1027,7 +1057,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -1256,6 +1287,11 @@ Shader "SHD_Jellyfish_Emission"
 				UNITY_SETUP_INSTANCE_ID(inputMesh);
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
+				
 				outputPackedVaryingsMeshToPS.ase_texcoord.xy = inputMesh.uv0.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -1266,7 +1302,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -1421,7 +1457,7 @@ Shader "SHD_Jellyfish_Emission"
 				float4 tex2DNode14 = tex2D( _EmissionMap, uv_EmissionMap );
 				float2 uv_IDMap = packedInput.ase_texcoord.xy * _IDMap_ST.xy + _IDMap_ST.zw;
 				float4 tex2DNode18 = tex2D( _IDMap, uv_IDMap );
-				float4 Emission_CHANNEL20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
+				float4 OUT_Emission20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
 				
 				surfaceDescription.Albedo = tex2D( _AlbedoMap, uv_AlbedoMap ).rgb;
 				surfaceDescription.Normal = UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f );
@@ -1433,7 +1469,7 @@ Shader "SHD_Jellyfish_Emission"
 				surfaceDescription.Specular = 0;
 				#endif
 
-				surfaceDescription.Emission = Emission_CHANNEL20.rgb;
+				surfaceDescription.Emission = OUT_Emission20.rgb;
 				surfaceDescription.Smoothness = tex2DNode12.a;
 				surfaceDescription.Occlusion = tex2DNode12.g;
 				surfaceDescription.Alpha = 1;
@@ -1517,7 +1553,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -1557,6 +1599,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -1610,7 +1655,8 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			
+			sampler2D _WavyOceanMap;
+
 
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
@@ -1620,7 +1666,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -1787,6 +1834,10 @@ Shader "SHD_Jellyfish_Emission"
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( outputPackedVaryingsMeshToPS );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1794,7 +1845,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -2006,7 +2057,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -2046,6 +2103,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -2100,7 +2160,8 @@ Shader "SHD_Jellyfish_Emission"
 			#endif
 			CBUFFER_END
 
-			
+			sampler2D _WavyOceanMap;
+
 
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/Lit.hlsl"
@@ -2110,7 +2171,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -2276,6 +2338,10 @@ Shader "SHD_Jellyfish_Emission"
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( outputPackedVaryingsMeshToPS );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -2283,7 +2349,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -2505,7 +2571,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -2547,6 +2619,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -2600,6 +2675,7 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
+			sampler2D _WavyOceanMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
 
@@ -2612,7 +2688,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -2784,6 +2861,11 @@ Shader "SHD_Jellyfish_Emission"
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, outputPackedVaryingsMeshToPS);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( outputPackedVaryingsMeshToPS );
 
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
+				
 				outputPackedVaryingsMeshToPS.ase_texcoord3.xy = inputMesh.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -2794,7 +2876,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -3043,7 +3125,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -3084,6 +3172,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -3137,6 +3228,7 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
+			sampler2D _WavyOceanMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
 
@@ -3149,7 +3241,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -3318,6 +3411,11 @@ Shader "SHD_Jellyfish_Emission"
 			AttributesMesh ApplyMeshModification(AttributesMesh inputMesh, float3 timeParameters, inout PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS )
 			{
 				_TimeParameters.xyz = timeParameters;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
+				
 				outputPackedVaryingsMeshToPS.ase_texcoord3.xy = inputMesh.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -3328,7 +3426,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue =  defaultVertexValue ;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -3634,7 +3732,13 @@ Shader "SHD_Jellyfish_Emission"
 			HLSLPROGRAM
 
 			#define _SPECULAR_OCCLUSION_FROM_AO 1
+			#define TESSELLATION_ON 1
+			#pragma require tessellation tessHW
+			#pragma hull HullFunction
+			#pragma domain DomainFunction
+			#define ASE_DISTANCE_TESSELLATION
 			#define _AMBIENT_OCCLUSION 1
+			#define HAVE_MESH_MODIFICATION
 			#define ASE_SRP_VERSION 100500
 
 
@@ -3685,6 +3789,9 @@ Shader "SHD_Jellyfish_Emission"
 			float4 _MaskMap_ST;
 			float4 _EmissionMap_ST;
 			float4 _IDMap_ST;
+			float _WavyVertexOffset;
+			float _WavyOceanTile;
+			float _WavyOceanSpeed;
 			float _ID_RedMultiplier;
 			float _ID_GreenMultiplier;
 			float _ID_BlueMultiplier;
@@ -3738,6 +3845,7 @@ Shader "SHD_Jellyfish_Emission"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
+			sampler2D _WavyOceanMap;
 			sampler2D _AlbedoMap;
 			sampler2D _NormalMap;
 			sampler2D _MaskMap;
@@ -3757,7 +3865,8 @@ Shader "SHD_Jellyfish_Emission"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Lit/LitDecalData.hlsl"
 			#include "Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl"
 
-			
+			#define ASE_NEEDS_VERT_NORMAL
+
 
 			#if defined(_DOUBLESIDED_ON) && !defined(ASE_NEED_CULLFACE)
 				#define ASE_NEED_CULLFACE 1
@@ -3988,6 +4097,11 @@ Shader "SHD_Jellyfish_Emission"
 			AttributesMesh ApplyMeshModification(AttributesMesh inputMesh, float3 timeParameters, inout PackedVaryingsMeshToPS outputPackedVaryingsMeshToPS )
 			{
 				_TimeParameters.xyz = timeParameters;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(inputMesh.normalOS);
+				float4 appendResult33 = (float4(ase_worldNormal.y , ase_worldNormal.z , 0.0 , 0.0));
+				float2 panner44 = ( ( _TimeParameters.x * _WavyOceanSpeed ) * float2( 0.1,0.1 ) + float2( 0,0 ));
+				float4 OUT_VertexOffset42 = ( float4( inputMesh.normalOS , 0.0 ) * ( _WavyVertexOffset * tex2Dlod( _WavyOceanMap, float4( (( _WavyOceanTile * appendResult33 )*1.0 + float4( panner44, 0.0 , 0.0 )).xy, 0, 0.0) ) ) );
+				
 				outputPackedVaryingsMeshToPS.ase_texcoord7.xy = inputMesh.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
@@ -3998,7 +4112,7 @@ Shader "SHD_Jellyfish_Emission"
 				#else
 				float3 defaultVertexValue = float3( 0, 0, 0 );
 				#endif
-				float3 vertexValue = defaultVertexValue;
+				float3 vertexValue = OUT_VertexOffset42.rgb;
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 				inputMesh.positionOS.xyz = vertexValue;
@@ -4258,7 +4372,7 @@ Shader "SHD_Jellyfish_Emission"
 				float4 tex2DNode14 = tex2D( _EmissionMap, uv_EmissionMap );
 				float2 uv_IDMap = packedInput.ase_texcoord7.xy * _IDMap_ST.xy + _IDMap_ST.zw;
 				float4 tex2DNode18 = tex2D( _IDMap, uv_IDMap );
-				float4 Emission_CHANNEL20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
+				float4 OUT_Emission20 = ( ( ( ( tex2DNode14 * ( tex2DNode18.r * _ID_RedMultiplier ) ) + ( tex2DNode14 * ( tex2DNode18.g * _ID_GreenMultiplier ) ) ) + ( tex2DNode14 * ( tex2DNode18.b * _ID_BlueMultiplier ) ) ) * _EmissionAllMultiplier );
 				
 				surfaceDescription.Albedo = tex2D( _AlbedoMap, uv_AlbedoMap ).rgb;
 				surfaceDescription.Normal = UnpackNormalScale( tex2D( _NormalMap, uv_NormalMap ), 1.0f );
@@ -4270,7 +4384,7 @@ Shader "SHD_Jellyfish_Emission"
 				surfaceDescription.Specular = 0;
 				#endif
 
-				surfaceDescription.Emission = Emission_CHANNEL20.rgb;
+				surfaceDescription.Emission = OUT_Emission20.rgb;
 				surfaceDescription.Smoothness = tex2DNode12.a;
 				surfaceDescription.Occlusion = tex2DNode12.g;
 				surfaceDescription.Alpha = 1;
@@ -4455,38 +4569,63 @@ Shader "SHD_Jellyfish_Emission"
 }
 /*ASEBEGIN
 Version=18934
-2555.333;824;1920;909;3207.708;423.0446;2.590296;True;False
+2555.333;824;1920;909;3182.436;-1367.033;1.547558;True;False
+Node;AmplifyShaderEditor.WorldNormalVector;32;-2321.98,2466.41;Inherit;True;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.SimpleTimeNode;47;-2389.242,1833.242;Inherit;False;1;0;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;48;-2420.162,1932.009;Inherit;False;Property;_WavyOceanSpeed;Wavy Ocean Speed;12;0;Create;True;0;0;0;False;0;False;0.228;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;23;-1540.542,698.3798;Inherit;False;Property;_ID_RedMultiplier;ID_Red Multiplier;6;0;Create;True;0;0;0;False;0;False;1;1;0;10000;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;18;-2138.126,697.3715;Inherit;True;Property;_IDMap;ID Map;4;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;26;-1451.895,1107.787;Inherit;False;Property;_ID_GreenMultiplier;ID_Green Multiplier;7;0;Create;True;0;0;0;False;0;False;1;1;0;10000;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-1157.995,578.0059;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;18;-2138.126,697.3715;Inherit;True;Property;_IDMap;ID Map;4;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.DynamicAppendNode;33;-1857.98,2482.41;Inherit;True;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.Vector2Node;46;-2171.603,1701.46;Inherit;False;Constant;_Noise_Direction;Noise_Direction;3;0;Create;True;0;0;0;False;0;False;0.1,0.1;0.1,0.1;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
+Node;AmplifyShaderEditor.RangedFloatNode;34;-1905.98,2226.41;Inherit;True;Property;_WavyOceanTile;Wavy Ocean Tile;10;0;Create;True;0;0;0;False;0;False;0.046;1;0;0.1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;45;-2138.349,1835.064;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.PannerNode;44;-1918.021,1785.085;Inherit;False;3;0;FLOAT2;0,0;False;2;FLOAT2;1,0.1;False;1;FLOAT;1;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.SamplerNode;14;-2101.032,1097.807;Inherit;True;Property;_EmissionMap;Emission Map;3;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;-1082.301,1067.713;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;35;-1585.98,2338.41;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT4;0,0,0,0;False;1;FLOAT4;0
 Node;AmplifyShaderEditor.RangedFloatNode;29;-1357.136,1397.332;Inherit;False;Property;_ID_BlueMultiplier;ID_Blue Multiplier;8;0;Create;True;0;0;0;False;0;False;1;1;0;10000;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;22;-1157.995,578.0059;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;27;-1082.301,1067.713;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-938.7897,601.1429;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-1010.853,1362.439;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;25;-934.6046,871.0198;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-819.1223,1300.442;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ScaleAndOffsetNode;36;-1441.98,2242.41;Inherit;False;3;0;FLOAT4;0,0,0,0;False;1;FLOAT;1;False;2;FLOAT4;0.5,0,0,0;False;1;FLOAT4;0
+Node;AmplifyShaderEditor.SamplerNode;38;-1185.98,2418.41;Inherit;True;Property;_WavyOceanMap;Wavy Ocean Map;9;0;Create;True;0;0;0;False;0;False;-1;d0083018e404c3b4c9e47c5ab52f9963;d0083018e404c3b4c9e47c5ab52f9963;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;37;-1169.98,2258.41;Inherit;False;Property;_WavyVertexOffset;Wavy Vertex Offset;11;0;Create;True;0;0;0;False;0;False;0.046;0.1;0;0.1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;24;-614.8339,714.2935;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;28;-819.1223,1300.442;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;15;-366.9495,1221.561;Inherit;False;Property;_EmissionAllMultiplier;Emission All Multiplier;5;0;Create;True;0;0;0;False;0;False;1;1;0;10000;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;40;-769.98,2210.41;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;31;-411.8885,965.9422;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.NormalVertexDataNode;39;-1073.98,1986.41;Inherit;True;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;41;-593.98,2130.41;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;16;-24.54971,1133.261;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;20;182.9549,1122.171;Inherit;False;Emission_CHANNEL;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.GetLocalVarNode;21;-88.34561,-28.22867;Inherit;False;20;Emission_CHANNEL;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;12;-507,-36.5;Inherit;True;Property;_MaskMap;Mask Map;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;13;-792.5995,-126.6;Inherit;True;Property;_NormalMap;Normal Map;2;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RegisterLocalVarNode;42;-305.98,2178.41;Inherit;False;OUT_VertexOffset;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;20;182.9549,1122.171;Inherit;False;OUT_Emission;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SamplerNode;11;-507.7,-298.1;Inherit;True;Property;_AlbedoMap;Albedo Map;0;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;8;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;TransparentDepthPrepass;0;8;TransparentDepthPrepass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-7;255;False;-1;255;True;-8;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;3;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;False;False;True;1;LightMode=TransparentDepthPrepass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;SceneSelectionPass;0;3;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;META;0;1;META;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;Forward;0;10;Forward;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;0;True;-21;0;True;-22;1;0;True;-23;0;True;-24;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-30;False;False;False;True;True;True;True;True;0;True;-46;False;False;False;False;False;True;True;0;True;-5;255;False;-1;255;True;-6;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;0;True;-25;True;0;True;-32;False;True;1;LightMode=Forward;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.GetLocalVarNode;21;-88.34561,-28.22867;Inherit;False;20;OUT_Emission;1;0;OBJECT;;False;1;COLOR;0
+Node;AmplifyShaderEditor.GetLocalVarNode;43;-70.81602,284.6449;Inherit;False;42;OUT_VertexOffset;1;0;OBJECT;;False;1;COLOR;0
+Node;AmplifyShaderEditor.SamplerNode;13;-792.5995,-126.6;Inherit;True;Property;_NormalMap;Normal Map;2;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SamplerNode;12;-507,-36.5;Inherit;True;Property;_MaskMap;Mask Map;1;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;9;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;TransparentDepthPostpass;0;9;TransparentDepthPostpass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=TransparentDepthPostpass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;TransparentBackface;0;7;TransparentBackface;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;0;True;-21;0;True;-22;1;0;True;-23;0;True;-24;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;False;True;True;True;True;True;0;True;-46;False;False;False;False;False;False;False;True;0;True;-25;True;0;True;-33;False;True;1;LightMode=TransparentBackface;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;Distortion;0;6;Distortion;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;4;1;False;-1;1;False;-1;4;1;False;-1;1;False;-1;True;1;False;-1;1;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;0;True;-11;255;False;-1;255;True;-12;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;2;False;-1;True;3;False;-1;False;True;1;LightMode=DistortionVectors;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;META;0;1;META;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;229.7999,-141.4001;Float;False;True;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;2;SHD_Jellyfish_Emission;53b46d85872c5b24c8f4f0a1c3fe4c87;True;GBuffer;0;0;GBuffer;35;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-14;255;False;-1;255;True;-13;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;True;0;True;-15;False;True;1;LightMode=GBuffer;False;False;0;;0;0;Standard;42;Surface Type;0;0;  Rendering Pass;1;0;  Refraction Model;0;0;    Blending Mode;0;0;    Blend Preserves Specular;1;0;  Receive Fog;1;0;  Back Then Front Rendering;0;0;  Transparent Depth Prepass;0;0;  Transparent Depth Postpass;0;0;  Transparent Writes Motion Vector;0;0;  Distortion;0;0;    Distortion Mode;0;0;    Distortion Depth Test;1;0;  ZWrite;0;0;  Z Test;4;0;Double-Sided;0;0;Alpha Clipping;0;0;  Use Shadow Threshold;0;0;Material Type,InvertActionOnDeselection;0;0;  Energy Conserving Specular;1;0;  Transmission;1;0;Receive Decals;1;0;Receives SSR;1;0;Receive SSR Transparent;0;0;Motion Vectors;1;0;  Add Precomputed Velocity;0;0;Specular AA;0;0;Specular Occlusion Mode;1;0;Override Baked GI;0;0;Depth Offset;0;0;DOTS Instancing;0;0;LOD CrossFade;0;0;Tessellation;1;637853513128366181;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;1;637853513150191584;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Vertex Position;1;0;0;11;True;True;True;True;True;True;False;False;False;False;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;8;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;TransparentDepthPrepass;0;8;TransparentDepthPrepass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-7;255;False;-1;255;True;-8;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;3;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;False;False;True;1;LightMode=TransparentDepthPrepass;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;DepthOnly;0;4;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-7;255;False;-1;255;True;-8;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;10;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;Forward;0;10;Forward;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;0;True;-21;0;True;-22;1;0;True;-23;0;True;-24;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-30;False;False;False;True;True;True;True;True;0;True;-46;False;False;False;False;False;True;True;0;True;-5;255;False;-1;255;True;-6;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;0;True;-25;True;0;True;-32;False;True;1;LightMode=Forward;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
 Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;Motion Vectors;0;5;Motion Vectors;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-9;255;False;-1;255;True;-10;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;False;False;True;1;LightMode=MotionVectors;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;229.7999,-141.4001;Float;False;True;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;2;SHD_Jellyfish_Emission;53b46d85872c5b24c8f4f0a1c3fe4c87;True;GBuffer;0;0;GBuffer;35;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;-27;False;False;False;False;False;False;False;False;False;True;True;0;True;-14;255;False;-1;255;True;-13;7;False;-1;3;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;False;True;0;True;-15;False;True;1;LightMode=GBuffer;False;False;0;;0;0;Standard;42;Surface Type;0;0;  Rendering Pass;1;0;  Refraction Model;0;0;    Blending Mode;0;0;    Blend Preserves Specular;1;0;  Receive Fog;1;0;  Back Then Front Rendering;0;0;  Transparent Depth Prepass;0;0;  Transparent Depth Postpass;0;0;  Transparent Writes Motion Vector;0;0;  Distortion;0;0;    Distortion Mode;0;0;    Distortion Depth Test;1;0;  ZWrite;0;0;  Z Test;4;0;Double-Sided;0;0;Alpha Clipping;0;0;  Use Shadow Threshold;0;0;Material Type,InvertActionOnDeselection;0;0;  Energy Conserving Specular;1;0;  Transmission;1;0;Receive Decals;1;0;Receives SSR;1;0;Receive SSR Transparent;0;0;Motion Vectors;1;0;  Add Precomputed Velocity;0;0;Specular AA;0;0;Specular Occlusion Mode;1;0;Override Baked GI;0;0;Depth Offset;0;0;DOTS Instancing;0;0;LOD CrossFade;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,-1;0;  Type;0;0;  Tess;16,False,-1;0;  Min;10,False,-1;0;  Max;25,False,-1;0;  Edge Length;16,False,-1;0;  Max Displacement;25,False,-1;0;Vertex Position;1;0;0;11;True;True;True;True;True;True;False;False;False;False;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;TransparentBackface;0;7;TransparentBackface;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;True;1;0;True;-21;0;True;-22;1;0;True;-23;0;True;-24;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;False;True;True;True;True;True;0;True;-46;False;False;False;False;False;False;False;True;0;True;-25;True;0;True;-33;False;True;1;LightMode=TransparentBackface;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;Rendering.HighDefinition.LightingShaderGraphGUI;0;1;New Amplify Shader;53b46d85872c5b24c8f4f0a1c3fe4c87;True;SceneSelectionPass;0;3;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=HDRenderPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;5;True;7;d3d11;metal;vulkan;xboxone;xboxseries;playstation;switch;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
+WireConnection;33;0;32;2
+WireConnection;33;1;32;3
+WireConnection;45;0;47;0
+WireConnection;45;1;48;0
+WireConnection;44;2;46;0
+WireConnection;44;1;45;0
+WireConnection;35;0;34;0
+WireConnection;35;1;33;0
 WireConnection;22;0;18;1
 WireConnection;22;1;23;0
 WireConnection;27;0;18;2
@@ -4497,14 +4636,22 @@ WireConnection;30;0;18;3
 WireConnection;30;1;29;0
 WireConnection;25;0;14;0
 WireConnection;25;1;27;0
-WireConnection;28;0;14;0
-WireConnection;28;1;30;0
+WireConnection;36;0;35;0
+WireConnection;36;2;44;0
+WireConnection;38;1;36;0
 WireConnection;24;0;19;0
 WireConnection;24;1;25;0
+WireConnection;28;0;14;0
+WireConnection;28;1;30;0
+WireConnection;40;0;37;0
+WireConnection;40;1;38;0
 WireConnection;31;0;24;0
 WireConnection;31;1;28;0
+WireConnection;41;0;39;0
+WireConnection;41;1;40;0
 WireConnection;16;0;31;0
 WireConnection;16;1;15;0
+WireConnection;42;0;41;0
 WireConnection;20;0;16;0
 WireConnection;0;0;11;0
 WireConnection;0;1;13;0
@@ -4512,5 +4659,6 @@ WireConnection;0;4;12;1
 WireConnection;0;6;21;0
 WireConnection;0;7;12;4
 WireConnection;0;8;12;2
+WireConnection;0;11;43;0
 ASEEND*/
-//CHKSM=035D526F8C500F37BF6BBD43F2664E2DB6D84C04
+//CHKSM=FB45C30464D5DEFA14F71653E25D0248687CF4FD
