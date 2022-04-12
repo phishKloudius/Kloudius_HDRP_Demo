@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_Jellyfish_Emission_A
+  m_Name: M_Jellyfish_Emission_B
   m_Shader: {fileID: 4800000, guid: d10dbb8af8cc92742849da996cf5a283, type: 3}
   m_ShaderKeywords: _ADD_PRECOMPUTED_VELOCITY _DISABLE_SSR_TRANSPARENT
   m_LightmapFlags: 4
@@ -22,23 +22,23 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AlbedoMap:
-        m_Texture: {fileID: 2800000, guid: 58c5b81260c5b784b8cbaba0a535879e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3171c2f586595ba4ca0f1dd6be52635b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: c3195f69575348e4697163e1247e12e6, type: 3}
+        m_Texture: {fileID: 2800000, guid: a8bf5d1fb9e7c3f489f6b69ca10b8688, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IDMap:
-        m_Texture: {fileID: 2800000, guid: d4f62e887134e9f43a692c077c36cb72, type: 3}
+        m_Texture: {fileID: 2800000, guid: 62ba648b2dba7f94bb4397a10586f338, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: 2b161347d12731f488fa52fa29fe9a08, type: 3}
+        m_Texture: {fileID: 2800000, guid: f95bc8dee2fa4e542be0d0293e26d480, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 696110628f71e0e49856b3f41507f83a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1794f4fc32fda044ca1ce113e0f21e3a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
