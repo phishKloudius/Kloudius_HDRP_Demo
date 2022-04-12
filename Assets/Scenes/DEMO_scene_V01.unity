@@ -8501,6 +8501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1528034508098609840, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -13667,9 +13671,9 @@ PlayableDirector:
   - key: {fileID: 4905470599500289680, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
     value: {fileID: 512503622}
   - key: {fileID: 8386995213701329386, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
-    value: {fileID: 953610189}
+    value: {fileID: 957749182}
   - key: {fileID: -3835560053224785802, guid: ad9a121913fcfc04cbaeb0bf82ae2e8f, type: 2}
-    value: {fileID: 953610189}
+    value: {fileID: 957749182}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &870679154
@@ -13680,7 +13684,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870679152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5360654, y: 1.7678723, z: 3.1293783}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14508,95 +14512,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97b4841ba26ff0e40a933a072115772d, type: 3}
---- !u!1001 &953610187
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_Name
-      value: SK_Blob_Monster_B
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5937700096435303328, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-      propertyPath: m_BlendShapeWeights.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
---- !u!1 &953610188 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 999a8ae24f7191a4e9c94882f277c456, type: 3}
-  m_PrefabInstance: {fileID: 953610187}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &953610189
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953610188}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &957749180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14606,11 +14521,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.52
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -14626,7 +14541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
       propertyPath: m_LocalRotation.y
@@ -14660,8 +14575,36 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5937700096435303328, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
+--- !u!1 &957749181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
+  m_PrefabInstance: {fileID: 957749180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &957749182
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957749181}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &965282026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17675,6 +17618,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1528034508098609840, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -19535,6 +19482,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1528034508098609840, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_DirtyAABB
@@ -26044,6 +25995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1528034508098609840, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -28681,6 +28636,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_Name
       value: MSH_JellyFish_Swim_A (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1528034508098609840, guid: 3b026e9d31cdad64eb567e09156aaf28, type: 3}
       propertyPath: m_DirtyAABB
