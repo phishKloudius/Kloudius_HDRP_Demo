@@ -14656,6 +14656,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SK_Blob_Monster (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2994274252551166742, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a3bdafb7f680d49b3c51788e7eefb9, type: 3}
 --- !u!1001 &965282026
