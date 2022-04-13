@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 08954277f48397c41993c1d62136c297
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _T_TestTeeth_UV: {fileID: 2800000, guid: f133c63b83b3fa34a92a093f39a0a62a, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
