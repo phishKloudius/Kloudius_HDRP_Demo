@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 15c1f17b3f9cdd04c81d03b2bb8ba638
+guid: c46502c0f978d6c4ba82cfb4a3abebaf
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,7 +7,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MSH_snake
+      name: M_Snake_Monster_Body
+    second: {fileID: 2100000, guid: f597aaf9bcc28c649946596fc65c6f99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Snake_Monster_Eyes
+    second: {fileID: 2100000, guid: f47b60ff22015d54cb34648d11c773e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Snake_Monster_Teeth
     second: {fileID: 2100000, guid: 290c8a6c0569d5847ad9cf71a8d61911, type: 2}
   materials:
     materialImportMode: 2
