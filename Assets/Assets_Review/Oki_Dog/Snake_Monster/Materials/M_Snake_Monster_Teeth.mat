@@ -65,7 +65,9 @@ Material:
     - _EnableFogOnTransparent: 1
     - _Float1: 1
     - _Float2: 0.26
+    - _NoiseRandomizer: 0.226
     - _NoiseScale: 2.79
+    - _NoiseSize: 0.39
     - _NoiseSpeed: 0.292
     - _Noise_Speed: 0.49
     - _ReceivesSSR: 1
@@ -92,10 +94,10 @@ Material:
     - _TransparentCullMode: 2
     - _TransparentSortPriority: 0
     - _TransparentZWrite: 1
-    - _UVPosition01: 8.4
+    - _UVPosition01: 13.2
     - _UVPosition02: 3.45
-    - _UVPosition03: 21.4
-    - _UVPosition04: 17.04
+    - _UVPosition03: 8.7
+    - _UVPosition04: 22.7
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 3
     - _ZTestGBuffer: 4
