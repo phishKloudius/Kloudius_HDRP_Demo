@@ -61,11 +61,13 @@ Material:
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 2
     - _DstBlend: 0
-    - _EmissionMultiplier: 8263
+    - _EmissionMultiplier: 5994
     - _EnableFogOnTransparent: 1
+    - _Float1: 1
     - _Float2: 0.26
-    - _NoiseScale: 0.314
-    - _Noise_Speed: -0.36
+    - _NoiseScale: 2.79
+    - _NoiseSpeed: 0.292
+    - _Noise_Speed: 0.49
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RenderQueueType: 1
@@ -90,9 +92,9 @@ Material:
     - _TransparentCullMode: 2
     - _TransparentSortPriority: 0
     - _TransparentZWrite: 1
-    - _UVPosition01: 7.82
+    - _UVPosition01: 8.4
     - _UVPosition02: 3.45
-    - _UVPosition03: 13.22
+    - _UVPosition03: 21.4
     - _UVPosition04: 17.04
     - _UseShadowThreshold: 0
     - _ZTestDepthEqualForOpaque: 3
@@ -107,5 +109,6 @@ Material:
     - _NoiseColor03: {r: 0.19215685, g: 0.945098, b: 0.9244134, a: 0}
     - _Noise_Direction: {r: 0, g: 0.1, b: 0, a: 0}
     - _Noise_Tiling: {r: 1, g: 3, b: 0, a: 0}
+    - _ScanTiling: {r: 1, g: 1, b: 0, a: 0}
     - _Vector2: {r: -0.02, g: -0.05, b: 0, a: 0}
   m_BuildTextureStacks: []
